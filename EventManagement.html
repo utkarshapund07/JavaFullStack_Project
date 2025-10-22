@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .header {
+            background-color: #ff6600;
+            color: white;
+            padding: 20px;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2, h3 {
+            color: #ff6600;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #ff6600;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #e65c00;
+        }
+        .success-message {
+            display: none;
+            color: green;
+            font-size: 18px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .event-section {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+        .event-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+        }
+        .event-images img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+        .event-images img:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">Welcome to Our Event Management Services</div>
+
+    <div class="container">
+        <h2>Our Managed Events</h2>
+        <p>We organize a variety of events with elegance and perfection.</p>
+
+        <div class="event-section">
+            <h3>Marriage Events</h3>
+            <p>We make your dream wedding a reality.</p>
+            <div class="event-images">
+                <img src="i1.jpg" alt="Marriage Event 1">
+                <img src="i2.jpeg" alt="Marriage Event 2">
+                <img src="i3.jpeg" alt="Marriage Event 3">
+                
+                <img src="i5.jpeg" alt="Marriage Event 5">
+            </div>
+        </div>
+
+        <div class="event-section">
+            <h3>Birthday Parties</h3>
+            <p>Adding fun and excitement to every birthday!</p>
+            <div class="event-images">
+                <img src="b1.jpeg" alt="Birthday Event 1">
+                <img src="b2.jpeg" alt="Birthday Event 2">
+                <img src="b3.jpeg" alt="Birthday Event 3">
+                <img src="b4.jpeg" alt="Birthday Event 4">
+                
+            </div>
+        </div>
+
+        <div class="event-section">
+            <h3>Corporate Events</h3>
+            <p>Professional and seamless event planning for businesses.</p>
+            <div class="event-images">
+                <img src="f1.jpeg" alt="Corporate Event 1">
+                <img src="f2.jpeg" alt="Corporate Event 2">
+                <img src="f3.jpeg" alt="Corporate Event 3">
+                <img src="f4.jpeg" alt="Corporate Event 4">
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Book Your Event</h2>
+        <form id="bookingForm">
+            <input type="hidden" name="access_key" value="63eb8b9e-d979-4841-b0ea-a8bdeef717e9">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="mobile">Mobile Number</label>
+            <input type="tel" id="mobile" name="mobile" required>
+
+            <label for="event">Select Event</label>
+            <select id="event" name="event">
+                <option value="Marriage">Marriage</option>
+                <option value="Birthday">Birthday</option>
+                <option value="Corporate">Corporate</option>
+            </select>
+
+            <label for="date">Date of Event</label>
+            <input type="date" id="date" name="date" required>
+
+            <label for="location">Location</label>
+            <input type="text" id="location" name="location" required>
+
+            <button type="submit">Submit Booking</button>
+        </form>
+        <div class="success-message" id="successMessage">Booking Successful! We will contact you soon.</div>
+    </div>
+
+    <script>
+        document.getElementById("bookingForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            console.log("Form submission started");
+
+            var formData = new FormData(this);
+
+            fetch("https://api.web3forms.com/submit", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Web3Forms response:", data);
+                if (data.success) {
+                    document.getElementById("bookingForm").style.display = "none";
+                    document.getElementById("successMessage").style.display = "block";
+                } else {
+                    alert("Form submission failed. Please try again.");
+                }
+            })
+            .catch(error => {
+                alert("An error occurred. Please try again later.");
+            });
+        });
+    </script>
+</body>
+</html>
